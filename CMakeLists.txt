@@ -41,42 +41,43 @@ target_sources(glfw-hpp-c-module PUBLIC
 target_link_libraries(glfw-hpp-c-module PUBLIC glfw-hpp)
 target_compile_features(glfw-hpp-c-module PUBLIC cxx_std_20)
 
+if (PROJECT_IS_TOP_LEVEL)
+    include(CMakePackageConfigHelpers)
 
-include(CMakePackageConfigHelpers)
+    write_basic_package_version_file(
+        glfw-hpp-config-version.cmake
+        VERSION ${PACKAGE_VERSION}
+        COMPATIBILITY SameMajorVersion
+    )
 
-write_basic_package_version_file(
-    glfw-hpp-config-version.cmake
-    VERSION ${PACKAGE_VERSION}
-    COMPATIBILITY SameMajorVersion
-)
+    install(
+        TARGETS
+            glfw-hpp
+            glfw-hpp-module
+            glfw-hpp-c-module
+        EXPORT
+            glfw-hpp-targets
+        FILE_SET HEADERS DESTINATION include
+        FILE_SET CXX_MODULES DESTINATION include
+    )
 
-install(
-    TARGETS
-        glfw-hpp
-        glfw-hpp-module
-        glfw-hpp-c-module
-    EXPORT
-        glfw-hpp-targets
-    FILE_SET HEADERS DESTINATION include
-    FILE_SET CXX_MODULES DESTINATION include
-)
+    install(
+        EXPORT
+            glfw-hpp-targets
+        FILE
+            glfw-hpp-targets.cmake
+        NAMESPACE
+            glfw-hpp::
+        DESTINATION
+            lib/cmake/glfw-hpp
+    )
 
-install(
-    EXPORT
-        glfw-hpp-targets
-    FILE
-        glfw-hpp-targets.cmake
-    NAMESPACE
-        glfw-hpp::
-    DESTINATION
-        lib/cmake/glfw-hpp
-)
-
-configure_file(cmake/glfw-hpp-config.cmake.in glfw-hpp-config.cmake @ONLY)
-install(
-    FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/glfw-hpp-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/glfw-hpp-config-version.cmake"
-    DESTINATION
-        lib/cmake/glfw-hpp
-)
+    configure_file(cmake/glfw-hpp-config.cmake.in glfw-hpp-config.cmake @ONLY)
+    install(
+        FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/glfw-hpp-config.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/glfw-hpp-config-version.cmake"
+        DESTINATION
+            lib/cmake/glfw-hpp
+    )
+endif()
