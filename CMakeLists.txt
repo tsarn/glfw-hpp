@@ -14,7 +14,7 @@ target_link_libraries(glfw-hpp INTERFACE glfw)
 target_compile_features(glfw-hpp INTERFACE cxx_std_17)
 
 add_library(glfw-hpp-module STATIC)
-target_sources(glfw-hpp-module PRIVATE
+target_sources(glfw-hpp-module PUBLIC
     FILE_SET cxx_modules
     TYPE CXX_MODULES
     FILES
@@ -25,7 +25,7 @@ target_link_libraries(glfw-hpp-module PUBLIC glfw-hpp)
 target_compile_features(glfw-hpp-module PUBLIC cxx_std_20)
 
 add_library(glfw-hpp-c-module STATIC)
-target_sources(glfw-hpp-c-module PRIVATE
+target_sources(glfw-hpp-c-module PUBLIC
     FILE_SET cxx_modules
     TYPE CXX_MODULES
     FILES
