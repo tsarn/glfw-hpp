@@ -12,25 +12,31 @@ target_include_directories(glfw-hpp INTERFACE
 )
 target_link_libraries(glfw-hpp INTERFACE glfw)
 target_compile_features(glfw-hpp INTERFACE cxx_std_17)
+target_sources(glfw-hpp INTERFACE
+    FILE_SET HEADERS
+    BASE_DIRS include
+    FILES
+        "./include/glfw-hpp/glfw.hpp"
+)
 
 add_library(glfw-hpp-module STATIC)
 target_sources(glfw-hpp-module PUBLIC
-    FILE_SET cxx_modules
+    FILE_SET CXX_MODULES
     TYPE CXX_MODULES
+    BASE_DIRS include
     FILES
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/glfw-hpp/glfw.cppm>"
-        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/glfw-hpp/glfw.cppm>"
+        "./include/glfw-hpp/glfw.cppm"
 )
 target_link_libraries(glfw-hpp-module PUBLIC glfw-hpp)
 target_compile_features(glfw-hpp-module PUBLIC cxx_std_20)
 
 add_library(glfw-hpp-c-module STATIC)
 target_sources(glfw-hpp-c-module PUBLIC
-    FILE_SET cxx_modules
+    FILE_SET CXX_MODULES
     TYPE CXX_MODULES
+    BASE_DIRS include
     FILES
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/glfw-hpp/glfw_c.cppm>"
-        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/glfw-hpp/glfw_c.cppm>"
+        "./include/glfw-hpp/glfw_c.cppm"
 )
 target_link_libraries(glfw-hpp-c-module PUBLIC glfw-hpp)
 target_compile_features(glfw-hpp-c-module PUBLIC cxx_std_20)
@@ -51,6 +57,8 @@ install(
         glfw-hpp-c-module
     EXPORT
         glfw-hpp-targets
+    FILE_SET HEADERS DESTINATION include
+    FILE_SET CXX_MODULES DESTINATION include
 )
 
 install(
@@ -71,12 +79,4 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/glfw-hpp-config-version.cmake"
     DESTINATION
         lib/cmake/glfw-hpp
-)
-install(
-    FILES
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/glfw-hpp/glfw.hpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/glfw-hpp/glfw.cppm"
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/glfw-hpp/glfw_c.cppm"
-    DESTINATION
-        include/glfw-hpp
 )
