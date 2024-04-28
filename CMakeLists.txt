@@ -11,6 +11,7 @@ target_include_directories(glfw-hpp INTERFACE
     "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
 )
 target_link_libraries(glfw-hpp INTERFACE glfw)
+target_compile_features(glfw-hpp INTERFACE cxx_std_17)
 
 add_library(glfw-hpp-module STATIC)
 target_sources(glfw-hpp-module PRIVATE
