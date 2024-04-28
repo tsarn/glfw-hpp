@@ -161,11 +161,15 @@ class Generator:
             self.line(f"export using ::{type_str};")
         for function in self.api["functions"]:
             name = function["name"]
-            if function.get("features") == "vulkan":
+            if "vulkan" in function.get("features", []):
                 self.line("#ifdef VK_VERSION_1_0")
+            if "webgpu" in function.get("features", []):
+                self.line("#ifdef _glfw3_webgpu_h_")
             self.line(f"export using ::{name};")
-            if function.get("features") == "vulkan":
+            if "vulkan" in function.get("features", []):
                 self.line("#endif // VK_VERSION_1_0")
+            if "webgpu" in function.get("features", []):
+                self.line("#endif // _glfw3_webgpu_h_")
         for define_str, value in self.api["defines"].items():
             self.line(f"#undef {define_str}")
             self.line(f"export constexpr int {define_str} = {value};")

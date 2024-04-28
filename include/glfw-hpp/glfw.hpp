@@ -1299,6 +1299,14 @@ public:
 #endif
 
 #endif
+
+#ifdef _glfw3_webgpu_h_
+
+    GLFW_HPP_NODISCARD WGPUSurface getWGPUSurface(WGPUInstance instance) {
+        return ::glfwGetWGPUSurface(instance, m_window);
+    }
+
+#endif // _glfw3_webgpu_h_
 };
 
 GLFW_HPP_EXPORT class Gamepad {
@@ -2244,6 +2252,9 @@ export using ::glfwGetPhysicalDevicePresentationSupport;
 #ifdef VK_VERSION_1_0
 export using ::glfwCreateWindowSurface;
 #endif // VK_VERSION_1_0
+#ifdef _glfw3_webgpu_h_
+export using ::glfwGetWGPUSurface;
+#endif // _glfw3_webgpu_h_
 #undef GLFW_VERSION_MAJOR
 export constexpr int GLFW_VERSION_MAJOR = 3;
 #undef GLFW_VERSION_MINOR

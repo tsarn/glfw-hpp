@@ -33,4 +33,8 @@ module;
 #include "vulkan/vulkan.hpp"
 #endif
 
+#if __has_include("glfw3webgpu.h")
+#include "glfw3webgpu.h"
+#endif
+
 #include "./glfw.hpp"

@@ -116,7 +116,7 @@ functions:
     type: PFN_vkGetInstanceProcAddr
   return:
     type: void
-  features: vulkan
+  features: [vulkan]
 - c_signature: "void glfwGetVersion(int* major, int* minor, int* rev)"
   name: glfwGetVersion
   parameters:
@@ -1249,7 +1249,7 @@ functions:
     type: const char*
   return:
     type: GLFWvkproc
-  features: vulkan
+  features: [vulkan]
 - c_signature: "int glfwGetPhysicalDevicePresentationSupport(VkInstance instance, VkPhysicalDevice device, uint32_t queuefamily)"
   name: glfwGetPhysicalDevicePresentationSupport
   parameters:
@@ -1262,7 +1262,7 @@ functions:
   return:
     type: int
     enum: bool
-  features: vulkan
+  features: [vulkan]
 - c_signature: "VkResult glfwCreateWindowSurface(VkInstance instance, GLFWwindow* window, const VkAllocationCallbacks* allocator, VkSurfaceKHR* surface)"
   name: glfwCreateWindowSurface
   parameters:
@@ -1276,7 +1276,17 @@ functions:
     type: VkSurfaceKHR*
   return:
     type: VkResult
-  features: vulkan
+  features: [vulkan]
+- c_signature: "WGPUSurface glfwGetWGPUSurface(WGPUInstance instance, GLFWwindow* window)"
+  name: glfwGetWGPUSurface
+  parameters:
+  - name: instance
+    type: WGPUInstance instance
+  - name: window
+    type: GLFWwindow*
+  return:
+    type: WGPUSurface
+  features: [webgpu]
 
 defines:
   GLFW_VERSION_MAJOR: 3
